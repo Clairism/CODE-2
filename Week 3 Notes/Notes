@@ -1,0 +1,28 @@
+Class Dog{
+//variables aka properties
+int size;
+int posX, posY;
+color fur;
+string softness;
+
+//constructor
+Dog(){
+	size = 10;
+   posX, posY = 10;
+  fur = color(255);
+  softness = "very";
+}
+
+//methods
+void run();
+void sit();
+void bark();
+}
+
+Dog fido = new Dog();
+fido.run();
+fido.size = 100;
+
+class CatDog public Cat{
+
+}
