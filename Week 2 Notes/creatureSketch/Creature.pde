@@ -42,9 +42,5 @@ class Creature{
     xPos+=xSpeed;
     yPos+=ySpeed;
  }
-
-// methods for the class 
-  
-  
   
 }
