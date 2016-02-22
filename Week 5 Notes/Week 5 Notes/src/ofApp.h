@@ -25,8 +25,7 @@ class ofApp : public ofBaseApp{
     Alien bob;
     Alien sarah;
     
-    
-    //"myAliens" is a vector that would include many objects
+    //"myAliens" -- vector that contains many objects
     //(similar to array's concept)
     vector <Alien> myAliens;
 
