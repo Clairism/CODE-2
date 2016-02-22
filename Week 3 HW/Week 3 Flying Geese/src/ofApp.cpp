@@ -3,8 +3,12 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    Flying.closeWings();
     flyChange = 0;
+    
+    Flying.closeWings();
+    Team.closeWings();
+    SecondTeam.closeWings();
+
 
 }
 
@@ -17,9 +21,11 @@ void ofApp::update(){
 void ofApp::draw(){
     
     ofBackground(125);
-    ofSetColor(0);
     
     Flying.draw(3*ofGetWidth()/4, ofGetHeight()/2 + flyChange);
+    Team.draw(ofGetWidth()/3, ofGetHeight()/2 + flyChange);
+    SecondTeam.draw(3*ofGetWidth()/4, 3*ofGetHeight()/4 + flyChange);
+
 
 }
 
@@ -46,16 +52,23 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     
-    Flying.openWings();
     flyChange = 50;
+
+    Flying.openWings();
+    Team.openWings();
+    SecondTeam.openWings();
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     
-    Flying.closeWings();
     flyChange = 0;
+
+    Flying.closeWings();
+    Team.closeWings();
+    SecondTeam.closeWings();
 
 
 }

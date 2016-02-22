@@ -24,6 +24,8 @@ class ofApp : public ofBaseApp{
 		
     
     Goose Flying;
+    Goose Team;
+    Goose SecondTeam;
     
     float flyChange;
 };
