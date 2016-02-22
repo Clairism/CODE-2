@@ -20,7 +20,7 @@ public:
         
     ofImage one;
     ofImage two;
-    ofImage third;
+    ofImage three;
 
     //methods
     void openWings();
