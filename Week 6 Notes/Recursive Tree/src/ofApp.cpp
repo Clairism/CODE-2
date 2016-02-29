@@ -2,6 +2,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+   // ofSetBackgroundAuto(false);
+    
+    ofSetFrameRate(1);
+    
+    me.dotSize = 8;
+    me.offSetAngleA = ofDegToRad(1.5);
+    me.offSetAngleB = ofDegToRad(50);
 
 }
 
@@ -12,6 +20,9 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
+    ofTranslate(ofGetWidth()/2, ofGetHeight());
+    me.seed1(me.dotSize, ofDegToRad(270), 0, 0);
 
 }
 

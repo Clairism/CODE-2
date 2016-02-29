@@ -6,9 +6,9 @@
 ################################################################################
 # OF ROOT
 #   The location of your root openFrameworks installation
-#       (default) OF_ROOT = ../../../../../../Applications/openFramework/../../../../../../Applications/openFramework/Applications/openFramework/../../../../../../Applications/openFramework/../../../../../../Applications/openFramework/Applications/openFramework/Applications/openFramework 
+#       (default) OF_ROOT = ../../../../../../Applications/openFramework 
 ################################################################################
-# OF_ROOT = ../../../../../../Applications/openFramework/../../../../../../Applications/openFramework/Applications/openFramework/../../../../../../Applications/openFramework/../../../../../../Applications/openFramework/Applications/openFramework/Applications/openFramework
+# OF_ROOT = ../../../../../../Applications/openFramework
 
 ################################################################################
 # PROJECT ROOT
