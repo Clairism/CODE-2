@@ -3,6 +3,8 @@
 
 void ofApp:: drawBranch(float length, float theta){
     
+    ofSetLineWidth(3);
+
     ofDrawLine(0, 0, 0, -length);
     ofTranslate(0, -length);
     
@@ -11,8 +13,8 @@ void ofApp:: drawBranch(float length, float theta){
     //won't crash
     if (length > 2) {
 
-        ofPushMatrix(); //always rotate inside a confined space
-        ofRotate(theta); //degrees
+        ofPushMatrix();     //always rotate inside a confined space
+        ofRotate(theta);    //degrees
         drawBranch(length, theta);
         ofPopMatrix();
         
@@ -32,6 +34,11 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    xPos += 2;
+    if(ofGetWidth()<xPos){  // if vertical position is off the screen (width)
+        xPos = 10;            // reset vertical position
+    }
 
 }
 
@@ -40,13 +47,12 @@ void ofApp::draw(){
     ofBackground(0);
     ofSetColor(255, 255, 0);
     ofFill();
-
     
-//    float length = 200;
-    ofTranslate(ofGetWidth()/2, ofGetHeight());
-    drawBranch(400, cos(ofGetElapsedTimef())*180); //cos -- let the branch move
+    ofTranslate(xPos, ofGetHeight());
+
+    drawBranch(400, cos(ofGetElapsedTimef())*180);      //cos -- let the branch move
+
 //    ofDrawLine(0, 0, 0, -length);
-//    
 //    
 //    ofTranslate(0, -length);
 //    ofRotate(30);

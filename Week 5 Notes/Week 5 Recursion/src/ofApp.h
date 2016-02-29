@@ -22,5 +22,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     void drawBranch(float length, float theta);
+    float xPos;
 		
 };
