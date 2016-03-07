@@ -30,7 +30,7 @@ public:
     ofxFloatSlider angleB;
     ofxPanel gui;
     
-    //    SOLVING -- variable "angle"
+//    SOLVING -- variable "angle"
     ofxFloatSlider angle;
     
 };

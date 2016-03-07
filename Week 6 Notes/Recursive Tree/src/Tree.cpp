@@ -20,7 +20,7 @@ void Tree:: seed1(float dotSize, float angle, float x, float y){
         
         if(r > 0.02 ){// this happens 98% of the time
             
-            //            SOLVING -- seed 1 is white
+//            SOLVING -- seed 1 is white
             ofSetColor(255);
             ofFill();
             ofDrawCircle(x, y, dotSize);
@@ -32,7 +32,7 @@ void Tree:: seed1(float dotSize, float angle, float x, float y){
             
         } else {
             // this happens 2% of the time
-            //            SOLVING -- slightly change the direction of the next branch
+//            SOLVING -- slightly change the direction of the next branch
             ofSetColor(0,0,255);
             ofFill();
             ofDrawCircle(x, y, dotSize);
@@ -41,7 +41,7 @@ void Tree:: seed1(float dotSize, float angle, float x, float y){
             float newY = y + sin(angle);
             
             seed1(dotSize*0.99, angle + offSetAngleA, newX, newY);
-            //            SOLVING -- seed 1 left side branches; seed 2 right side branches
+//            SOLVING -- seed 1 left side branches; seed 2 right side branches
             //seed2(dotSize*0.6, angle + offSetAngleB, newX, newY);
             seed1(dotSize*0.5, angle - offSetAngleB, newX, newY);
         }
@@ -61,7 +61,7 @@ void Tree:: seed2(float dotSize, float angle, float x, float y){
         
         if(r > 0.05){
             
-            //            SOLVING -- seed 2 is red
+//            SOLVING -- seed 2 is red
             ofSetColor(255, 0, 0);
             ofFill();
             ofDrawCircle(x, y, dotSize);

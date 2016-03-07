@@ -15,7 +15,7 @@ void ofApp::setup(){
     gui.add(angleA.setup("angleA", 1.5, 1, 5));
     gui.add(angleB.setup("angleB", 50, 1, 360));
     
-    //    SOLVING -- variable "angle" -> controls the direction of the entire tree
+//    SOLVING -- variable "angle" -> controls the direction of the entire tree
     gui.add(angle.setup("angle", 270, 1, 360));
     
 }
@@ -33,7 +33,7 @@ void ofApp::draw(){
     ofTranslate(ofGetWidth()/2, ofGetHeight());
     //me.seed1(me.dotSize, ofDegToRad(270), 0, 0);
     
-    //    SOLVING -- variable "angle"
+//    SOLVING -- variable "angle"
     me.seed1(me.dotSize, ofDegToRad(angle), 0, 0);
     
 }

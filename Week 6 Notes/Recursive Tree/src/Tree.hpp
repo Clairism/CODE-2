@@ -10,7 +10,7 @@
 #define Tree_hpp
 
 #include <stdio.h>
-#include "ofMain.h" //#include "ofApp.h" --> Redefinition of class
+#include "ofMain.h" //DEBUG -- #include "ofApp.h" --> Redefinition of class
 
 #endif /* Tree_hpp */
 
