@@ -12,19 +12,32 @@ Feather::Feather(){
     
 }
 
-void Feather::growQuill(float size, float length, float angle, float x, float y){
+void Feather::growQuill(float size, float length, float quillLength, float angle, float x, float y, ofColor color){
     
-    //size --, length ++, length = quillLength;
-    
-    //call growBarb
-}
-
-void Feather::growBarb(float size, float angle, float x, float y){
-    
-    ofSetColor(r, g, b);
+    color = quillColor;
+    ofSetColor(color);
     ofFill();
     
-    //grow on both sides of the quill
+    //check if length <= quillLength (maxLength);
     
-    //call growQuill
+    //draw
+    
+    //size --, length ++, change angle;
+
+    //call growBarb
+    
+    //call itself
+
+}
+
+void Feather::growBarb(float size, float angle, float x, float y, ofColor color){
+    
+    color = barbColor;
+    ofSetColor(color);
+    ofFill();
+    
+    //draw (on both sides of the quill) += & -= offSetAngle
+    
+    //size --;
+    
 }

@@ -21,16 +21,18 @@ public:
     float barbSize;
     float quillLength;
     
-    float offSetAngleA;
-    float offSetAngleB;
+    float offSetAngle;
+    ofColor barbColor;
+    ofColor quillColor;
     
-    int r,g,b;
+    bool grow;
     
     //Constructor
     Feather();
     
     //Methods
-    void growBarb(float size, float angle, float x, float y);    
-    void growQuill(float size, float length, float angle, float x, float y);
+    
+    void growQuill(float size, float length, float quillLength, float angle, float x, float y, ofColor color);
+    void growBarb(float size, float angle, float x, float y, ofColor color);
     
 };
