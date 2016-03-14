@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-
-
 //--------------------------------------------------------------
 void ofApp::setup(){
     
@@ -15,10 +13,10 @@ void ofApp::setup(){
     imgSize = quillSize*75;
 
     gui.setup();
-   //gui.add(barbSize.setup("BarbSize", 8, 1, 14));
-    //gui.add(quillSize.setup("FeatherSize", 8, 5, 10));
     gui.add(quillAngle.setup("FeatherAngle", PI/2, ofDegToRad(50), ofDegToRad(130)));
 
+    //gui.add(barbSize.setup("BarbSize", 8, 1, 14));
+    //gui.add(quillSize.setup("FeatherSize", 8, 5, 10));
 }
 
 //--------------------------------------------------------------
@@ -69,10 +67,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-//    ofLogNotice() << "position: " << mouseX;
-//    ofLogNotice() << "position: " << mouseY;
-    ofLogNotice() << "x: " << imgSize/((ofGetWidth()/2) - mouseX);
-    ofLogNotice() << "y: " << imgSize/(mouseY - (ofGetHeight()/2));
 
 }
 

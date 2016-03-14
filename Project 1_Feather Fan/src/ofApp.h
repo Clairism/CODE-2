@@ -43,9 +43,9 @@ class ofApp : public ofBaseApp{
     Feather Feather6;
     Feather Feather7;
 
+    ofxFloatSlider quillAngle;
     ofxPanel gui;
-    
+
 //    ofxFloatSlider barbSize;
 //    ofxFloatSlider barbAngle;
-    ofxFloatSlider quillAngle;
 };
