@@ -19,11 +19,13 @@ public:
     
     //Properties
     float barbSize;
-    float quillLength;
+    float quillSize;
+    float maxQuillLength;
     
     float offSetAngle;
-    ofColor barbColor;
-    ofColor quillColor;
+    
+    ofColor quillColor = ofColor(0);
+    ofColor barbColor = ofColor(25, 200, 255);
     
     bool grow;
     
@@ -32,7 +34,7 @@ public:
     
     //Methods
     
-    void growQuill(float size, float length, float quillLength, float angle, float x, float y, ofColor color);
-    void growBarb(float size, float angle, float x, float y, ofColor color);
+    void growQuill(float size, float angle, float x, float y);
+    void growBarb(float size, float angle, float x, float y);
     
 };

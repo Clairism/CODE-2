@@ -24,18 +24,28 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     //get image of fan's base
+    ofImage fanBase;
     
-    //Feathers from left to right
-    Feather First;
-    Feather Second;
-    Feather Third;
-    Feather Fourth;
-    Feather Fifth;
-    
-    ofxFloatSlider angle;
-    ofxFloatSlider barbSize;
-    ofxFloatSlider quillLength;
-    ofxPanel gui;
+    float imageX, imageY;
+    float imgSize;
 
-		
+    float offSet;
+    float offSetAngle;
+    
+    float quillSize;
+
+    //Feathers from left to right
+    Feather Feather1;
+    Feather Feather2;
+    Feather Feather3;
+    Feather Feather4;
+    Feather Feather5;
+    Feather Feather6;
+    Feather Feather7;
+
+    ofxPanel gui;
+    
+//    ofxFloatSlider barbSize;
+//    ofxFloatSlider barbAngle;
+    ofxFloatSlider quillAngle;
 };
