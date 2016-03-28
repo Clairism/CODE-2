@@ -58,7 +58,7 @@ public:
         ofVec2f v;
         v.x = end.x - start.x;
         v.y = end.y - start.y;
-        v *= (2/3);
+        v *= (2/3.0);
         v += start;
         return v;
     }

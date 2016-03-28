@@ -57,7 +57,7 @@ void ofApp::draw(){
     for (KochLine l : Lines) {
         l.draw();
         
-        cout << l.kochC() << endl;
+        //cout << l.kochC() << endl;
     }
     
     
