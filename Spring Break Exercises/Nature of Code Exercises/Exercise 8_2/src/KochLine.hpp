@@ -18,19 +18,58 @@
 class KochLine{
 public:
     
+    
     KochLine(ofVec2f a, ofVec2f b);
+
     
     ofVec2f start;
     ofVec2f end;
     
-    void setup(ofVec2f a, ofVec2f b);
-    void draw();
+    ofVec2f kochA(){
+        return start;
+    }
     
-    ofVec2f kochA();
-    ofVec2f kochB();
-    ofVec2f kochC();
-    ofVec2f kochD();
-    ofVec2f kochE();
+    ofVec2f kochB(){
+        ofVec2f v;
+        v.x = end.x - start.x;
+        v.y = end.y - start.y;
+        
+        v /= 3;
+        v += start;
+        return v;
+    }
+    
+    ofVec2f kochC() {
+        ofVec2f a = start;
+        
+        ofVec2f v;
+        v.x = end.x - start.x;
+        v.y = end.y - start.y;
+        v /= 3;
+        a += v;
+        
+        ofRotate(-ofRadToDeg(60));
+        a += v;
+        
+        return a;
+    }
+    
+    ofVec2f kochD(){
+        ofVec2f v;
+        v.x = end.x - start.x;
+        v.y = end.y - start.y;
+        v *= (2/3);
+        v += start;
+        return v;
+    }
+    
+    ofVec2f kochE(){
+        return end;
+    }
+    
+    
+    void draw();
+
     
    /*
     ofPoint kochA();
