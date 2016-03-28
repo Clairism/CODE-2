@@ -2,17 +2,46 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
+    ofSetBackgroundAuto(false);
+    //    ofSetLineWidth(5);
+    
+    ofVec2f a;
+    a.set(0, ofGetHeight()/2);
+    ofVec2f b;
+    b.set(ofGetWidth(), ofGetHeight()/3);
+    ofVec2f c;
+    c.set(ofGetWidth()/2, 100+ofGetWidth()/2*cos(ofDegToRad(30)));
+    
+    // Starting with additional lines
+    Lines.push_back(KochLine(a, b));
+    Lines.push_back(KochLine(b, c));
+    Lines.push_back(KochLine(c, a));
+    
+    
+    for (int i = 0; i < 5; i++) {
+        generate();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
+    //startLine.draw();
+    
+    for (KochLine l : Lines) {
+        l.draw();
+        
+        //cout << l.kochC() << endl;
+    }
+    
+    
 }
 
 //--------------------------------------------------------------
