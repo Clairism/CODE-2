@@ -29,14 +29,27 @@ void ofApp::setup(){
     
     ofSetBackgroundAuto(false);
 //    ofSetLineWidth(5);
-    
-    start.set(0, ofGetHeight()-150);
-    end.set(ofGetWidth(), ofGetHeight()-150);
+/*
+    start.set(0, 150);
+    end.set(ofGetWidth(), 150);
     
     KochLine startLine(start, end);
 
     Lines.push_back(startLine); //add startline into the array Lines
-
+*/
+    
+    ofVec2f a;
+    a.set(0, ofGetHeight()/2);
+    ofVec2f b;
+    b.set(ofGetWidth(), ofGetHeight()/3);
+    ofVec2f c;
+    c.set(ofGetWidth()/2, 100+ofGetWidth()/2*cos(ofDegToRad(30)));
+    
+    // Starting with additional lines
+    Lines.push_back(KochLine(a, b));
+    Lines.push_back(KochLine(b, c));
+    Lines.push_back(KochLine(c, a));
+    
 
     for (int i = 0; i < 5; i++) {
         generate();
