@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "KochLine.hpp"
+
 
 class ofApp : public ofBaseApp{
 
@@ -21,4 +23,14 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+
+    void generate();
+    
+    KochLine startLine;
+    
+    vector <KochLine> kochLines;
+    
+    ofVec2f start;
+    ofVec2f end;
+
 };
