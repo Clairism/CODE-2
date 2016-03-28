@@ -48,7 +48,7 @@ public:
         v /= 3;
         a += v;
         
-        ofRotate(-ofRadToDeg(60));
+        v.rotate(-60);
         a += v;
         
         return a;
@@ -69,7 +69,6 @@ public:
     
     
     void draw();
-
     
    /*
     ofPoint kochA();

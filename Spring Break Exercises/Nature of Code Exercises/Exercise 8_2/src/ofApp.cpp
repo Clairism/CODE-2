@@ -29,10 +29,9 @@ void ofApp::setup(){
     
     ofSetBackgroundAuto(false);
 //    ofSetLineWidth(5);
-
     
-    start.set(0, 150);
-    end.set(ofGetWidth(), 150);
+    start.set(0, ofGetHeight()-150);
+    end.set(ofGetWidth(), ofGetHeight()-150);
     
     KochLine startLine(start, end);
 
@@ -58,7 +57,7 @@ void ofApp::draw(){
     for (KochLine l : Lines) {
         l.draw();
         
-        //cout << l.kochC() << endl;
+        cout << l.kochC() << endl;
     }
     
     
