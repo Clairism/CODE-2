@@ -23,7 +23,8 @@ public:
     ofPoint posA;
     ofPoint posB;
     ofPoint pos;  //output point of Point A & B
-    
+    float catchUpSpeed;
+
     
     //constructor
     Rectangle();

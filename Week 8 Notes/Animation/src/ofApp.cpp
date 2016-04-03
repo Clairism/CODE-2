@@ -5,18 +5,22 @@ void ofApp::setup(){
     
     pct = 0;
     
+    cc.pos.x = 10;
+    cc.pos.y = 10;
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    pct += 0.01;
+    pct += 0.01f;
     
     if(pct >= 1){
         pct = 0;
     }
 
-    cc.interpolate(pct);
+    //cc.interpolate(pct);
+    cc.zeno(ofGetWidth()-10, 10);
 }
 
 //--------------------------------------------------------------

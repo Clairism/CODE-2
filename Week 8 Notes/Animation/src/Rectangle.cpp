@@ -18,6 +18,9 @@ Rectangle::Rectangle(){
     posB.x = 1000;
     posB.y = 10;
     
+    catchUpSpeed = 0.03;
+
+    
 }
 
 
@@ -49,10 +52,10 @@ void Rectangle::interpolate(float myPct){
 }
 
 void Rectangle::zeno(float catchX, float catchY){
-    //pos.x = catchUpSpeed * catchX + (1 - catchUpSpeed)*pos.x;
-//    pos.y = catchUpSpeed * catchY + (1 - catchUpSpeed)*pos.y;
-    cout << "pos.x: " << pos.x << endl;
-    cout << "pos.y: " << pos.y << endl;
+    pos.x = catchUpSpeed * catchX + (1 - catchUpSpeed)*pos.x;
+    pos.y = catchUpSpeed * catchY + (1 - catchUpSpeed)*pos.y;
+//    cout << "pos.x: " << pos.x << endl;
+//    cout << "pos.y: " << pos.y << endl;
 }
 
 
