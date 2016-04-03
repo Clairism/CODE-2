@@ -23,14 +23,16 @@ class ofApp : public ofBaseApp{
     
     float pct;
     
-    ofPoint xPos;
-    ofPoint yPos;
     ofPoint pos;
+    ofPoint posA, posB;
     
     float posX;
     float posY;
     
     float x;
     float y;
+    float angle;
+    float myPct;
+
 		
 };

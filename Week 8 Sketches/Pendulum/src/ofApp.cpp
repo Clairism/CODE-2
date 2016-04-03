@@ -3,17 +3,18 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    float myPct;
-    myPct = .04;
+    //ofSetBackgroundAuto(false);
     
-    posY = 0;
-    posX = ofGetWidth();
+    posA.x = 0;
+    posA.y = ofGetWidth();
     
-    pct = powf(myPct,2);
-
     //direction changer
     x = 1;
-    y = 0;
+    
+    //longest length
+    y = ofGetHeight()/2;
+    
+    //cout << pct << endl;
     
 }
 
@@ -24,7 +25,9 @@ void ofApp::update(){
     //if we want something to move we must increase it
     //making the pct number smaller will slow the sq down (try .01)
     
-    pct +=0.01* x;
+    
+    //going back and forth
+    pct += 0.01 * x;
     
     if (pos.x >= ofGetWidth()){
     
@@ -36,23 +39,35 @@ void ofApp::update(){
         
     }
     
-    pos.x = (1-pct)*posY+pct*posX;
+    pos.x = (1-pct) * posA.x + pct * posA.y;
     
-    y *= cos(ofGetWidth());
+    //swing
+   // cout << myPct << endl;
 
-    if(pos.x == ofGetWidth()/2){
-        y *= sin(ofGetWidth());
+
+    if(pos.x <= ofGetWidth()/2){
+        
+        myPct = powf(0.01, pct);
+
+    }else{
+
+        myPct = powf(0.01, (1 - pct));
+
     }
-    
-    pos.y= ofGetWidth()/2 + y;
 
-    
+    pos.y = (1 - myPct) * y;
+
+
 }
 
 //--------------------------------------------------------------
 
 void ofApp::draw(){
     
+    ofSetColor(0);
+    ofFill();
+    
+    ofDrawLine(pos.x, pos.y, ofGetWidth()/2, 0);
     ofDrawCircle(pos.x,pos.y, 15);
     
 }
