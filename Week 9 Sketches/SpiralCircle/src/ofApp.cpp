@@ -2,17 +2,37 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
+    ofSetBackgroundAuto(false);
+    
+    circleX = ofGetWidth()/2;
+    circleY = ofGetHeight()/2;
+    
+    amplitude = 1;
+    
+    period = 0;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
+    r+=0.1;
+    
+    circleX = ofGetWidth()/2 + sin(ofGetElapsedTimef()) * r;
+    circleY = ofGetHeight()/2 + cos(ofGetElapsedTimef()) * r;
+    
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    ofSetColor(0);
+    ofFill();
+    
+    ofDrawCircle(circleX, circleY, 1);
+
+    
 }
 
 //--------------------------------------------------------------
