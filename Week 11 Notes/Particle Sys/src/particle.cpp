@@ -22,42 +22,59 @@ ofPoint Particle::randomPointIncircle(float maxRad){
 }
 
 void Particle::setup(){
+
     pos = param.eCenter + randomPointIncircle(param.eRad);
     vel = randomPointIncircle(param.velRad);
     time = 0;
     lifeTime = param.lifeTime;
     live = true;
+}
+/*
+ 
+void Particle::setup(float rad, float velRad, float _lifeTime){
+
+    pos = param.eCenter + randomPointIncircle(rad);
+    vel = randomPointIncircle(velRad);
+    time = 0;
+    lifeTime = _lifeTime;
+    live = true;
     
 }
+ */
 
 
 void Particle::update(float dt){
+    
     if(live){
         
         //rotate velocity
         vel.rotate(0, 0, param.rotate*dt);
         
-        //update position
         
-        ofPoint acc;
-        ofPoint delta;
+        ofPoint acc; //accleration
+        ofPoint delta = pos - param.eCenter; //distance between particle & emitter
+        float len = delta.length(); // length of delta
         
-        if(ofInRange(1000, param.force, param.friction)){
-            
+        if(ofInRange(len, 0, param.eRad)){
             delta.normalize();
-            
-            acc += delta*10;
+           // cout << "delta: " << delta << endl;
+            //attraction & repulsion forces
+            acc += delta*param.force;
             
             //spinning forces
             acc.x += delta.x*param.spin;
             acc.y += delta.y*param.spin;
-
+            
         }
         
-        vel = acc*dt;
+        vel += acc*dt;
         
+        //friction
+        vel *= (1 - param.friction);
+        
+        //update position
         pos += vel * dt;
-
+        
         //update time and check if it should die
         time += dt;
         if(time >= lifeTime){
@@ -67,6 +84,7 @@ void Particle::update(float dt){
 }
 
 void Particle::draw(){
+    
     if(live){
         float size = ofMap(time, 0, lifeTime, 1, 3);
         ofColor color = ofColor::red;

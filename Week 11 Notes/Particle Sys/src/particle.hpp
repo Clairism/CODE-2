@@ -25,6 +25,7 @@ public:
     
     //methods
     void setup();
+//    void setup(float rad, float velRad, float _lifeTime);
     void update(float dt);
     void draw();
     

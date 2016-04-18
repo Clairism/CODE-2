@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "particle.hpp"
-
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -24,13 +24,33 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     //Particle p;
-    
+    /*
     float time;
     float time0;
     int bornCount;
     float bornRate;
     
     vector<Particle> p;
+     */
+    
+    float time;
+    float time0;
+    
+    vector<Particle> p;
+    float bornRate;
+    float bornCount;
+    
+    ofxFloatSlider rad;
+    ofxFloatSlider velRad;
+    ofxFloatSlider lifeTime;
+    ofxFloatSlider timeGui;
+    ofxFloatSlider rotate;
+    
+    ofxFloatSlider force;
+    ofxFloatSlider spin;
+    ofxFloatSlider friction;
 
+    ofxPanel gui;
+    
     
 };
