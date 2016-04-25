@@ -22,6 +22,9 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
     ofImage cat;
+    ofImage source;
+    ofImage result;
     int w,h;
+    //ofPixels p;
     
 };
