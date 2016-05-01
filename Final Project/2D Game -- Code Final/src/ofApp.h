@@ -23,31 +23,58 @@ struct basicSprite {
     animation_t animation;	// a variable to store the animation this sprite uses
     ofPoint pos;			// the position on the screen this sprite will be drawn at
     float speed;			// the speed at which this sprite moves down the screen
+    float size;
 };
 
-static animation_t suitNormalIdle = {
+static animation_t normalIdle = {
     0,  //.index (starts drawing at index 0 on the spritesheet)
     0,  //.frame
     2,  //.totalframes  (2 frames in this animation)
     1,  //.width
     1, //.height
-    90, //.frameduration
+    100, //.frameduration
     0,  //.nexttick
     -1, //.loops (infinite loops)
     0, //.finalindex
     1   //.frameskip
 };
 
-static animation_t casualNormalIdle = {
-    4,  //.index (changed index means pointing to another sprite on thespritesheet!)
+static animation_t happyIdle = {
+    2,  //.index of the first animation
     0,  //.frame
     2,  //.totalframes
     1,  //.width
     1,  //.height
-    90, //.frameduration
+    100, //.frameduration
     0,  //.nexttick
     -1, //.loops
-    4, //.finalindex
+    2, //.finalindex
+    1   //.frameskip
+};
+
+static animation_t walkRight = {
+    4,  //.index of the first animation
+    0,  //.frame
+    4,  //.totalframes
+    1,  //.width
+    1,  //.height
+    1000, //.frameduration
+    0,  //.nexttick
+    -1, //.loops
+    0, //.finalindex
+    1   //.frameskip
+};
+
+static animation_t walkLeft = {
+    8,  //.index of the first animation
+    0,  //.frame
+    4,  //.totalframes
+    1,  //.width
+    1,  //.height
+    100, //.frameduration
+    0,  //.nexttick
+    -1, //.loops
+    0, //.finalindex
     1   //.frameskip
 };
 
@@ -83,6 +110,13 @@ class ofApp : public ofBaseApp{
     vector<basicSprite *> sprites;				// our vector of sprites
     
     ofPoint playerPos;
+    bool changeAnim;
+    
+    bool hasSuit;
+    bool isHappy;
+    
+    bool walkingLeft;
+    bool walkingRight;
     
 };
 

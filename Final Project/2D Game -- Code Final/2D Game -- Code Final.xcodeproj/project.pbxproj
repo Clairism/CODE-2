@@ -119,12 +119,12 @@
 		90DF609E1CD5B1D1002B5D39 /* ofxSprite */ = {
 			isa = PBXGroup;
 			children = (
+				90DF60A31CD5B211002B5D39 /* ofxSpriteSheetRenderer.cpp */,
+				90DF60A41CD5B211002B5D39 /* ofxSpriteSheetRenderer.h */,
 				90DF609F1CD5B211002B5D39 /* CollageTexture.cpp */,
 				90DF60A01CD5B211002B5D39 /* CollageTexture.h */,
 				90DF60A11CD5B211002B5D39 /* LinearTexture.cpp */,
 				90DF60A21CD5B211002B5D39 /* LinearTexture.h */,
-				90DF60A31CD5B211002B5D39 /* ofxSpriteSheetRenderer.cpp */,
-				90DF60A41CD5B211002B5D39 /* ofxSpriteSheetRenderer.h */,
 				90DF60A51CD5B211002B5D39 /* PixelTexture.cpp */,
 				90DF60A61CD5B211002B5D39 /* PixelTexture.h */,
 			);
