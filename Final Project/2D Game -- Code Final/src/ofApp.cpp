@@ -4,46 +4,122 @@ bool sortVertically(basicSprite * a, basicSprite * b ) {
     return a->pos.y > b->pos.y;
 }
 
+// this method will be used to get the index of the sprite the player is standing on, or to check for possible collisions with "solid" tiles.
+int ofApp::getTileName(int x, int y) {
+    return backgrounds[y * GRIDW + x]->tileName;
+}
 //--------------------------------------------------------------
 void ofApp::setup(){
-    /*
-    gui.setDefaultBackgroundColor(ofColor(255, 255, 0));
-    gui.setDefaultWidth(800);
-    gui.setDefaultHeight(100);
-    gui.setDefaultFillColor(0);
-    gui.setDefaultBorderColor(ofColor(255));
-    //gui.setPosition(ofGetWidth()/2, ofGetHeight()/2);
-    gui.setName("Dialogue");
     
-    gui.setup();
-    
-    gui.add(button.setup("Button"));
-    gui.add(toggle.setup("Toggle", true));
-     */
-    
+    //set a limited frame rate, enable alpha blending, and set no anti-aliasing for more pixel arty kind of vibe.
     ofSetFrameRate(30);
-    
-    spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 64); //declare a new renderer with 1 layer, 10000 tiles per layer, default layer of 0, tile size of 64
-    
-    //start with Idle anim
-    spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST); // load the spriteSheetExample.png texture of size 256x256 into the sprite sheet. set it's scale mode to nearest since it's pixel art
-
-    // turn on alpha blending.
     ofEnableAlphaBlending();
     ofDisableAntiAliasing();
+
+    //create the sprite renderer with 2 layers, and 16x16 tiles.
+    spriteRenderer = new ofxSpriteSheetRenderer(2, 10000, 0, 64);
+    
+    //load in the 64x64 pixels texture.
+    spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
     
     playerPos.x = ofGetWidth()/2;
     playerPos.y = ofGetHeight()/2;
     
+    //create "player" as an instance of our basicSprite struct, then set his position, speed, and default animation.
+    player = new basicSprite();
+    player->pos.set(playerPos.x, playerPos.y);
+    player->speed = 0.1;
+
+    player->animation = normalIdle;
+    
+    //override default index
+//    player->animation.index = 0;
+    
+    //loop through the grid size that we want, make a new sprite for each background tile we want,
+    //then set its position based on the grid and our scale, then push it to the vector to hold it.
+    //we'll be looping through the vector to access these sprites' values.
+    for (int i = 0; i < GRIDH; i++) {
+        for (int j = 0; j < GRIDW; j++) {
+            basicSprite * newSprite = new basicSprite();
+            newSprite->pos.set(j*spriteRenderer->getTileSize()*SCALE, i*spriteRenderer->getTileSize()*SCALE);
+            newSprite->tileName = (int)ofRandom(8,12);
+            backgrounds.push_back(newSprite);
+        }
+    }
     
     hasSuit = false;
+    isHappy = false;
     
+    walkingLeft = false;
+    walkingRight = false;
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    if(hasSuit){
+        spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
+    }else{
+        spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
+    }
+    
+    //clear and update the renderer
+    spriteRenderer->clear();
+    spriteRenderer->update(ofGetElapsedTimeMillis());
+    
+    //add the Link sprite to the renderer.
+    spriteRenderer->addCenteredTile(&player->animation, player->pos.x - cameraCenter.x, player->pos.y - cameraCenter.y, 1, F_NONE, SCALE);
+    
+    //if there are backgrounds, loop through it and add each one to the renderer.
+    if (backgrounds.size() > 0) {
+        for (int i = backgrounds.size()-1; i>=0; i--) {
+            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
+            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
+            //spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
+            //}
+        }
+    }
+    
+    //update the background position based on the grid and the camera position.
+    for (int i = 0; i < GRIDH; i++) {
+        for (int j = 0; j < GRIDW; j++) {
+            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
+        }
+    }
+    
+    //update the player's position and animation index based on key presses.
+    if (walkingLeft) {
+        player->pos.x -= player->speed * spriteRenderer->getTileSize()*SCALE;
+        player->animation.index = 8;
+//        player->animation = walkLeft;
+    }else if (walkingRight) {
+        player->pos.x += player->speed * spriteRenderer->getTileSize()*SCALE;
+        player->animation.index = 4;
+    }else{
+//        player->animation = normalIdle;
+    }
+    
+    //if no keys are being pressed, stop animating.
+    //if keys are being pressed, animate Link's sprite.
+        
+        //this is an application of how we could check the player's position against the tiles.
+        //we could use this approach to do collision detection for example.
+        
+        int tilePosX = floor((player->pos.x + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
+        int tilePosY = floor((player->pos.y + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
+        
+//        cout << "pos.x relative to tiles: " <<  tilePosX << ", pos.y relative to tiles: " <<  tilePosY << endl;
+//        
+//        cout << "background sprite index: " << getTileName(tilePosX, tilePosY) << endl;
+    //}
+    
+    //update the camera position to focus on the player's position.
+    cameraCenter.x = player->pos.x - ofGetWindowWidth()/2;
+    cameraCenter.y = player->pos.y - ofGetWindowHeight()/2;
+    
+    
+  /*
     if(hasSuit){
         spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
     }else{
@@ -65,13 +141,13 @@ void ofApp::update(){
             //display in pos.y
             sprites[i]->pos.y;
             
-            /*
+   
             if(sprites[i]->pos.y > ofGetHeight()+16) //if they are past the bottom of the screen
             {
                 delete sprites[i]; //delete them
                 sprites.erase(sprites.begin()+i); // remove them from the vector
             }
-             */
+
 //            else
             
             spriteRenderer->addCenteredTile(&sprites[i]->animation, sprites[i]->pos.x, sprites[i]->pos.y); // add them to the sprite renderer (add their animation at their position, there are a lot more options for what could happen here, scale, tint, rotation, etc, but the animation, x and y are the only variables that are required)
@@ -109,8 +185,7 @@ void ofApp::update(){
         sprites.push_back(newSprite); //add our sprite to the vector
     }
     
-
-//    cout<<"hasSuit:" << hasSuit <<endl;
+    */
     
 }
 
@@ -123,7 +198,6 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
 
     if(key == ' '){
         if(!hasSuit){
@@ -136,25 +210,24 @@ void ofApp::keyPressed(int key){
     }
 
     
-    if (key == 'a'){
+    if (key == 'a' || key == OF_KEY_LEFT){
         walkingLeft = true;
     }
     
-    if (key == 'd'){
+    if (key == 'd' || key == OF_KEY_RIGHT){
         walkingRight = true;
     }
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    
-    sprites.clear();
-    
-    if (key == 'a'){
+
+    if (key == 'a' || key == OF_KEY_LEFT){
         walkingLeft = false;
     }
     
-    if (key == 'd'){
+    if (key == 'd' || key == OF_KEY_RIGHT){
         walkingRight = false;
     }
 
