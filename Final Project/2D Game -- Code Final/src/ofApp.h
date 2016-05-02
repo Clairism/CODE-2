@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxSpriteSheetRenderer.h"
+#include "ofxTextSuite.h"
 
 struct basicSprite {
     animation_t animation;	// a variable to store the animation this sprite uses
@@ -121,6 +122,11 @@ class ofApp : public ofBaseApp{
     //this is useful so we can find out which sprites the player is near so we can collide or not, for example.
     int getTileName(int x, int y);
     
+    //dialog
+    ofxTextBlock        myText;
+    TextBlockAlignment  alignment;  //constants for controlling state
     
+    ofImage textBox;
+    float indent;
 };
 

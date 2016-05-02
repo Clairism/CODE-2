@@ -11,17 +11,19 @@ int ofApp::getTileName(int x, int y) {
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    //set a limited frame rate, enable alpha blending, and set no anti-aliasing for more pixel arty kind of vibe.
+    ofBackground(0);
+    
+//sprites setup
+    //set a limited frame rate, enable alpha blending, and set no anti-aliasing for pixel art.
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
     ofDisableAntiAliasing();
 
-    //create the sprite renderer with 2 layers, and 16x16 tiles.
+    //create the sprite renderer with 2 layers, and 64x64 tiles.
     spriteRenderer = new ofxSpriteSheetRenderer(2, 10000, 0, 64);
-    
-    //load in the 64x64 pixels texture.
     spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
     
+    //set position
     playerPos.x = ofGetWidth()/2;
     playerPos.y = ofGetHeight()/2;
     
@@ -32,11 +34,8 @@ void ofApp::setup(){
 
     player->animation = normalIdle;
     
-    //override default index
-//    player->animation.index = 0;
-    
     //loop through the grid, make a new sprite for each background tile we want,
-    //et its position based on the grid and our scale, push it to the vector.
+    //set its position based on the grid and our scale, push it to the vector.
     //we'll be looping through the vector to access these sprites' values.
     for (int i = 0; i < GRIDH; i++) {
         for (int j = 0; j < GRIDW; j++) {
@@ -53,12 +52,25 @@ void ofApp::setup(){
     walkingLeft = false;
     walkingRight = false;
     
+    
+//text setup
+    
+    textBox.load("TextWindow.png");
+    myText.init("Helvetica.dfont", 20);
+    
+    myText.setText("Welcome to my 'Egg' world. Press A, D or Left, Right Arrow to move. Space bar to change clothes. ");
+    
+    //Initially wrap the text to the screen width
+    myText.wrapTextX(2*ofGetWidth()/3);
+    myText.setColor(0, 120, 225, 255);
+
+    indent = 10;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    cout<< player->animation.frame <<endl;
+//    cout<< player->animation.frame <<endl;
 
     if(hasSuit){
         spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
@@ -82,50 +94,50 @@ void ofApp::update(){
         
 //        player->animation = walkLeft;
 
-
     }else if (walkingRight) {
         player->pos.x += player->speed * spriteRenderer->getTileSize()*SCALE;
         player->animation.index = 4;
         player->animation.total_frames = 4;
         player->animation.frame_duration = 200;
 
-    }else{
+    }else if(!isHappy){
         player->animation.index = 0;
         player->animation.total_frames = 2;
         player->animation.frame_duration = 500;
-
+    }else if(isHappy){
+        player->animation.index = 2;
+        player->animation.total_frames = 2;
+        player->animation.frame_duration = 500;
     }
     
+  /*
     //if there are backgrounds, loop through it and add each one to the renderer.
-    //    if (backgrounds.size() > 0) {
-    //        for (int i = backgrounds.size()-1; i>=0; i--) {
-    //            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
-    //            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
-    //            //spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
-    //            //}
-    //        }
-    //    }
+    if (backgrounds.size() > 0) {
+        for (int i = backgrounds.size()-1; i>=0; i--) {
+            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
+            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
+                spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
+            //}
+        }
+    }
     
     //update the background position based on the grid and the camera position.
-    //    for (int i = 0; i < GRIDH; i++) {
-    //        for (int j = 0; j < GRIDW; j++) {
-    //            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
-    //        }
-    //    }
-    
-    //if no keys are being pressed, stop animating.
-    //if keys are being pressed, animate Link's sprite.
+    for (int i = 0; i < GRIDH; i++) {
+        for (int j = 0; j < GRIDW; j++) {
+            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
+        }
+    }
+ 
+    //this is an application of how we could check the player's position against the tiles.
+    //we could use this approach to do collision detection for example.
         
-        //this is an application of how we could check the player's position against the tiles.
-        //we could use this approach to do collision detection for example.
+    int tilePosX = floor((player->pos.x + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
+    int tilePosY = floor((player->pos.y + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
         
-        int tilePosX = floor((player->pos.x + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
-        int tilePosY = floor((player->pos.y + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
-        
-//        cout << "pos.x relative to tiles: " <<  tilePosX << ", pos.y relative to tiles: " <<  tilePosY << endl;
-//        
-//        cout << "background sprite index: " << getTileName(tilePosX, tilePosY) << endl;
+    cout << "pos.x relative to tiles: " <<  tilePosX << ", pos.y relative to tiles: " <<  tilePosY << endl;
+    cout << "background sprite index: " << getTileName(tilePosX, tilePosY) << endl;
     //}
+   */
     
     //update the camera position to focus on the player's position.
     cameraCenter.x = player->pos.x - ofGetWindowWidth()/2;
@@ -207,11 +219,33 @@ void ofApp::draw(){
     
 //    gui.draw();
     spriteRenderer->draw();
+    
+    textBox.draw(ofPoint(0, ofGetHeight()*2/3), ofGetWidth()/2 + indent, ofGetHeight()*2/3 + indent);
+    myText.drawCenter(ofGetWidth()/2, ofGetHeight()*2/3);
+
+//    //draw text
+//    switch (alignment) {
+//            
+//        case OF_TEXT_ALIGN_LEFT:
+//            myText.draw(0,0);
+//            break;
+//        case OF_TEXT_ALIGN_RIGHT:
+//            myText.drawRight(ofGetWidth(), 0);
+//            break;
+//        case OF_TEXT_ALIGN_CENTER:
+//            myText.drawCenter(ofGetWidth()/2,0);
+//            break;
+//        case OF_TEXT_ALIGN_JUSTIFIED:
+//            myText.drawJustified(0, 0, myText.getWidth());
+//            break;
+//            
+//    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+//space bar -- suit
     if(key == ' '){
         if(!hasSuit){
             //wear suit
@@ -221,8 +255,20 @@ void ofApp::keyPressed(int key){
             hasSuit = false;
         }
     }
-
     
+//be happy
+    
+    if(key == 'z'){
+        if(!isHappy){
+            //wear suit
+            isHappy = true;
+        }else{
+            //take off suit
+            isHappy = false;
+        }
+    }
+
+//movement control
     if (key == 'a' || key == OF_KEY_LEFT){
         walkingLeft = true;
     }
@@ -231,6 +277,33 @@ void ofApp::keyPressed(int key){
         walkingRight = true;
     }
     
+    //text allign control
+    switch (key) {
+            
+            
+        case '1':
+            myText.wrapTextX(ofGetWidth());
+            break;
+        case '2':
+            myText.wrapTextArea(ofGetWidth(), ofGetHeight());
+            break;
+        case 'l':
+            alignment = OF_TEXT_ALIGN_LEFT;
+            break;
+        case 'r':
+            alignment = OF_TEXT_ALIGN_RIGHT;
+            break;
+        case 'c':
+            alignment = OF_TEXT_ALIGN_CENTER;
+            break;
+        case 'j':
+            alignment = OF_TEXT_ALIGN_JUSTIFIED;
+            
+            break;
+            
+            
+    }
+
 }
 
 //--------------------------------------------------------------

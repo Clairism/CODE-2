@@ -1,1 +1,3 @@
 ofxGui
+ofxSpriteSheetRenderer
+ofxTextSuite
