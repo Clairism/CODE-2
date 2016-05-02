@@ -28,15 +28,15 @@ void ofApp::setup(){
     //create "player" as an instance of our basicSprite struct, then set his position, speed, and default animation.
     player = new basicSprite();
     player->pos.set(playerPos.x, playerPos.y);
-    player->speed = 0.1;
+    player->speed = 0.5;
 
     player->animation = normalIdle;
     
     //override default index
 //    player->animation.index = 0;
     
-    //loop through the grid size that we want, make a new sprite for each background tile we want,
-    //then set its position based on the grid and our scale, then push it to the vector to hold it.
+    //loop through the grid, make a new sprite for each background tile we want,
+    //et its position based on the grid and our scale, push it to the vector.
     //we'll be looping through the vector to access these sprites' values.
     for (int i = 0; i < GRIDH; i++) {
         for (int j = 0; j < GRIDW; j++) {
@@ -93,11 +93,15 @@ void ofApp::update(){
         player->pos.x -= player->speed * spriteRenderer->getTileSize()*SCALE;
         player->animation.index = 8;
 //        player->animation = walkLeft;
+        player->animation.total_frames = 4;
+
     }else if (walkingRight) {
         player->pos.x += player->speed * spriteRenderer->getTileSize()*SCALE;
         player->animation.index = 4;
+        player->animation.total_frames = 4;
+
     }else{
-//        player->animation = normalIdle;
+        player->animation.index = 0;
     }
     
     //if no keys are being pressed, stop animating.
