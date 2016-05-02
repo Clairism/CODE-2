@@ -95,7 +95,8 @@ class ofApp : public ofBaseApp{
 
     //create the instance of the spriteSheetRenderer. we only need one.
     ofxSpriteSheetRenderer* spriteRenderer;
-    
+    ofxSpriteSheetRenderer* textWindow;
+
     //create an instance of our basicSprite struct that we'll use to store player information
     //(this is technically a pointer to a basicSprite object but we use it essentially the same as we would if it was the object itself)
     basicSprite * player;

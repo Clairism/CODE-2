@@ -11,7 +11,7 @@ int ofApp::getTileName(int x, int y) {
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofBackground(0);
+    ofBackground(200);
     
 //sprites setup
     //set a limited frame rate, enable alpha blending, and set no anti-aliasing for pixel art.
@@ -22,7 +22,7 @@ void ofApp::setup(){
     //create the sprite renderer with 2 layers, and 64x64 tiles.
     spriteRenderer = new ofxSpriteSheetRenderer(2, 10000, 0, 64);
     spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
-    
+
     //set position
     playerPos.x = ofGetWidth()/2;
     playerPos.y = ofGetHeight()/2;
@@ -55,14 +55,14 @@ void ofApp::setup(){
     
 //text setup
     
-    textBox.load("TextWindow.png");
+    //textBox.load("TextWindow.png");
+    
     myText.init("Helvetica.dfont", 20);
     
     myText.setText("Welcome to my 'Egg' world. Press A, D or Left, Right Arrow to move. Space bar to change clothes. ");
     
     //Initially wrap the text to the screen width
     myText.wrapTextX(2*ofGetWidth()/3);
-    myText.setColor(0, 120, 225, 255);
 
     indent = 10;
 }
@@ -79,9 +79,9 @@ void ofApp::update(){
     }
     
     //clear and update the renderer
-//    spriteRenderer->clear();
+    spriteRenderer->clear();
     spriteRenderer->update(ofGetElapsedTimeMillis());
-    
+
     //add the Link sprite to the renderer.
     spriteRenderer->addCenteredTile(&player->animation, player->pos.x - cameraCenter.x, player->pos.y - cameraCenter.y, 1, F_NONE, SCALE);
     
@@ -216,11 +216,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+    //textBox.draw(ofPoint(0, ofGetHeight()*2/3), ofGetWidth(), 120 + indent);
+
 //    gui.draw();
     spriteRenderer->draw();
     
-    textBox.draw(ofPoint(0, ofGetHeight()*2/3), ofGetWidth()/2 + indent, ofGetHeight()*2/3 + indent);
+    myText.setColor(0, 50, 225, 255);
     myText.drawCenter(ofGetWidth()/2, ofGetHeight()*2/3);
 
 //    //draw text
