@@ -58,6 +58,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    cout<< player->animation.frame <<endl;
+
     if(hasSuit){
         spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
     }else{
@@ -65,44 +67,51 @@ void ofApp::update(){
     }
     
     //clear and update the renderer
-    spriteRenderer->clear();
+//    spriteRenderer->clear();
     spriteRenderer->update(ofGetElapsedTimeMillis());
     
     //add the Link sprite to the renderer.
     spriteRenderer->addCenteredTile(&player->animation, player->pos.x - cameraCenter.x, player->pos.y - cameraCenter.y, 1, F_NONE, SCALE);
     
-    //if there are backgrounds, loop through it and add each one to the renderer.
-    if (backgrounds.size() > 0) {
-        for (int i = backgrounds.size()-1; i>=0; i--) {
-            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
-            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
-            //spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
-            //}
-        }
-    }
-    
-    //update the background position based on the grid and the camera position.
-    for (int i = 0; i < GRIDH; i++) {
-        for (int j = 0; j < GRIDW; j++) {
-            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
-        }
-    }
-    
     //update the player's position and animation index based on key presses.
     if (walkingLeft) {
         player->pos.x -= player->speed * spriteRenderer->getTileSize()*SCALE;
         player->animation.index = 8;
-//        player->animation = walkLeft;
         player->animation.total_frames = 4;
+        player->animation.frame_duration = 200;
+        
+//        player->animation = walkLeft;
+
 
     }else if (walkingRight) {
         player->pos.x += player->speed * spriteRenderer->getTileSize()*SCALE;
         player->animation.index = 4;
         player->animation.total_frames = 4;
+        player->animation.frame_duration = 200;
 
     }else{
         player->animation.index = 0;
+        player->animation.total_frames = 2;
+        player->animation.frame_duration = 500;
+
     }
+    
+    //if there are backgrounds, loop through it and add each one to the renderer.
+    //    if (backgrounds.size() > 0) {
+    //        for (int i = backgrounds.size()-1; i>=0; i--) {
+    //            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
+    //            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
+    //            //spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
+    //            //}
+    //        }
+    //    }
+    
+    //update the background position based on the grid and the camera position.
+    //    for (int i = 0; i < GRIDH; i++) {
+    //        for (int j = 0; j < GRIDW; j++) {
+    //            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
+    //        }
+    //    }
     
     //if no keys are being pressed, stop animating.
     //if keys are being pressed, animate Link's sprite.
