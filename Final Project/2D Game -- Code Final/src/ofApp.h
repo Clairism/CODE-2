@@ -83,12 +83,6 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-//    ofxPanel gui;
-//    
-//    ofxButton button;
-//    ofxToggle toggle;
-
     
     ofPoint playerPos;
     bool changeAnim;
@@ -110,9 +104,11 @@ class ofApp : public ofBaseApp{
     ofPoint cameraCenter;
     
     const float SCALE = 2; //constant to store our sprite scaling value
+    const float BGSCALE = 12; //constant to store our sprite scaling value
     const int GRIDW = 30;  //width in tiles of the background grid
     const int GRIDH = 30;  //height in tiles of the background grid
     
+
     bool hasSuit;
     bool isHappy;
     

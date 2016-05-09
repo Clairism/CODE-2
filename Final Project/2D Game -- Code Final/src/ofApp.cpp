@@ -20,12 +20,12 @@ void ofApp::setup(){
     ofDisableAntiAliasing();
 
     //create the sprite renderer with 2 layers, and 64x64 tiles.
-    spriteRenderer = new ofxSpriteSheetRenderer(2, 10000, 0, 64);
-    spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
+    spriteRenderer = new ofxSpriteSheetRenderer(3, 10000, 0, 128);
+    spriteRenderer->loadTexture("Egg game sprite sheet.png", 1024, GL_NEAREST);
 
     //set position
     playerPos.x = ofGetWidth()/2;
-    playerPos.y = ofGetHeight()/2;
+    playerPos.y = ofGetHeight()*2/3;
     
     //create "player" as an instance of our basicSprite struct, then set his position, speed, and default animation.
     player = new basicSprite();
@@ -34,14 +34,12 @@ void ofApp::setup(){
 
     player->animation = normalIdle;
     
-    //loop through the grid, make a new sprite for each background tile we want,
-    //set its position based on the grid and our scale, push it to the vector.
-    //we'll be looping through the vector to access these sprites' values.
+    //loop through the grid, make a new sprite background tile
     for (int i = 0; i < GRIDH; i++) {
         for (int j = 0; j < GRIDW; j++) {
             basicSprite * newSprite = new basicSprite();
-            newSprite->pos.set(j*spriteRenderer->getTileSize()*SCALE, i*spriteRenderer->getTileSize()*SCALE);
-            newSprite->tileName = (int)ofRandom(8,12);
+            newSprite->pos.set(j*spriteRenderer->getTileSize()*BGSCALE, i*spriteRenderer->getTileSize()*BGSCALE);
+            newSprite->tileName = 24;
             backgrounds.push_back(newSprite);
         }
     }
@@ -70,14 +68,12 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-//    cout<< player->animation.frame <<endl;
-
-    if(hasSuit){
-        spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
-    }else{
-        spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
-    }
-    
+//    if(hasSuit){
+//        spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
+//    }else{
+//        spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
+//    }
+//    
     //clear and update the renderer
     spriteRenderer->clear();
     spriteRenderer->update(ofGetElapsedTimeMillis());
@@ -110,21 +106,20 @@ void ofApp::update(){
         player->animation.frame_duration = 500;
     }
     
-  /*
+  
     //if there are backgrounds, loop through it and add each one to the renderer.
     if (backgrounds.size() > 0) {
         for (int i = backgrounds.size()-1; i>=0; i--) {
-            //this line isn't necessary and in fact is imperfect, but uncomment to see how we might limit drawing to only the current screen area.
-            //if (backgrounds[i]->pos.x > 0 && backgrounds[i]->pos.x < ofGetWindowWidth() && backgrounds[i]->pos.y > 0 && backgrounds[i]->pos.y < ofGetWindowHeight()) {
-                spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, SCALE);
-            //}
+
+          spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, BGSCALE);
+
         }
     }
     
     //update the background position based on the grid and the camera position.
     for (int i = 0; i < GRIDH; i++) {
         for (int j = 0; j < GRIDW; j++) {
-            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*SCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*SCALE - cameraCenter.y);
+            backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*BGSCALE - cameraCenter.x, i*spriteRenderer->getTileSize()*BGSCALE - cameraCenter.y);
         }
     }
  
@@ -133,84 +128,16 @@ void ofApp::update(){
         
     int tilePosX = floor((player->pos.x + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
     int tilePosY = floor((player->pos.y + (spriteRenderer->getTileSize() * SCALE)/2) / (spriteRenderer->getTileSize() * SCALE));
-        
-    cout << "pos.x relative to tiles: " <<  tilePosX << ", pos.y relative to tiles: " <<  tilePosY << endl;
-    cout << "background sprite index: " << getTileName(tilePosX, tilePosY) << endl;
+    
+//    cout << "pos.x relative to tiles: " <<  tilePosX << ", pos.y relative to tiles: " <<  tilePosY << endl;
+//    cout << "background sprite index: " << getTileName(tilePosX, tilePosY) << endl;
     //}
-   */
+   
     
     //update the camera position to focus on the player's position.
     cameraCenter.x = player->pos.x - ofGetWindowWidth()/2;
-    cameraCenter.y = player->pos.y - ofGetWindowHeight()/2;
-    
-    
-  /*
-    if(hasSuit){
-        spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
-    }else{
-        spriteRenderer->loadTexture("CharacterCasualSheet.png", 256, GL_NEAREST);
-    }
+    cameraCenter.y = player->pos.y - ofGetWindowHeight()*2/3;
 
-    spriteRenderer->clear(); // clear the sheet
-    spriteRenderer->update(ofGetElapsedTimeMillis()); //update the time in the renderer, this is necessary for animations to advance
-    
-    sort( sprites.begin(), sprites.end(), sortVertically ); // sorts the sprites vertically so the ones that are lower are drawn later and there for in front of the ones that are higher up
-//    spriteRenderer->addTile(0, playerPos.x, playerPos.y);
-
-    
-    if(sprites.size()>0) // if we have sprites
-    {
-        for(int i=sprites.size()-1;i>=0;i--) //go through them
-        {
-//            sprites[i]->pos.y += sprites[i]->speed; //add their speed to their y
-            //display in pos.y
-            sprites[i]->pos.y;
-            
-   
-            if(sprites[i]->pos.y > ofGetHeight()+16) //if they are past the bottom of the screen
-            {
-                delete sprites[i]; //delete them
-                sprites.erase(sprites.begin()+i); // remove them from the vector
-            }
-
-//            else
-            
-            spriteRenderer->addCenteredTile(&sprites[i]->animation, sprites[i]->pos.x, sprites[i]->pos.y); // add them to the sprite renderer (add their animation at their position, there are a lot more options for what could happen here, scale, tint, rotation, etc, but the animation, x and y are the only variables that are required)
-       }
-    }
-    
-    
-    
-    for(int i=0;i<10;i++){
-        
-        basicSprite * newSprite = new basicSprite(); // create a new sprite
-        
-        newSprite->pos.set(playerPos.x ,playerPos.y); //set its position
-        newSprite->speed=0.5; //set its speed (higher = faster)
-        
-        //set its animation (different modes)
-
-        if(walkingLeft || walkingRight){
-            
-            if(walkingLeft){
-                newSprite->animation = walkLeft;
-            }
-            
-            if(walkingRight){
-                newSprite->animation = walkRight;
-            }
-
-        }else{
-            newSprite->animation = normalIdle;
-        }
-        
-        newSprite->animation.frame_duration /= newSprite->speed; //change frame duration
-        
-        newSprite->animation.index = (int)ofRandom(0,2)*8; //change the start index of our sprite. we have 4 rows of animations and our spritesheet is 8 tiles wide, so our possible start indicies are 0, 8, 16, and 24
-        sprites.push_back(newSprite); //add our sprite to the vector
-    }
-    
-    */
     
 }
 
@@ -224,23 +151,6 @@ void ofApp::draw(){
     myText.setColor(0, 50, 225, 255);
     myText.drawCenter(ofGetWidth()/2, ofGetHeight()*2/3);
 
-//    //draw text
-//    switch (alignment) {
-//            
-//        case OF_TEXT_ALIGN_LEFT:
-//            myText.draw(0,0);
-//            break;
-//        case OF_TEXT_ALIGN_RIGHT:
-//            myText.drawRight(ofGetWidth(), 0);
-//            break;
-//        case OF_TEXT_ALIGN_CENTER:
-//            myText.drawCenter(ofGetWidth()/2,0);
-//            break;
-//        case OF_TEXT_ALIGN_JUSTIFIED:
-//            myText.drawJustified(0, 0, myText.getWidth());
-//            break;
-//            
-//    }
 
 }
 
@@ -275,34 +185,9 @@ void ofApp::keyPressed(int key){
     }
     
     if (key == 'd' || key == OF_KEY_RIGHT){
-        walkingRight = true;
-    }
-    
-    //text allign control
-    switch (key) {
-            
-            
-        case '1':
-            myText.wrapTextX(ofGetWidth());
-            break;
-        case '2':
-            myText.wrapTextArea(ofGetWidth(), ofGetHeight());
-            break;
-        case 'l':
-            alignment = OF_TEXT_ALIGN_LEFT;
-            break;
-        case 'r':
-            alignment = OF_TEXT_ALIGN_RIGHT;
-            break;
-        case 'c':
-            alignment = OF_TEXT_ALIGN_CENTER;
-            break;
-        case 'j':
-            alignment = OF_TEXT_ALIGN_JUSTIFIED;
-            
-            break;
-            
-            
+        if(playerPos.x >= 0){
+            walkingRight = true;
+        }
     }
 
 }
