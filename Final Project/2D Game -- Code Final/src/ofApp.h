@@ -1,9 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
 #include "ofxSpriteSheetRenderer.h"
-#include "ofxTextSuite.h"
 
 struct basicSprite {
     animation_t animation;	// a variable to store the animation this sprite uses
@@ -151,21 +149,18 @@ class ofApp : public ofBaseApp{
     //dialog
     ofTrueTypeFont myFont;
     
-//    ofxTextBlock        myText;
-//    TextBlockAlignment  alignment;  //constants for controlling state
     string security1 = "You can't enter without proper clothes!";
     string security2 = "Enjoy yourself!";
     string gameWin = "You Win!";
     
     ofImage textBox;
-    float indent;
-    
+
+    //sound
     ofSoundPlayer footstep;
     ofSoundPlayer gotSuit;
     ofSoundPlayer win;
     
     bool played;
-    float timer;
     
 };
 

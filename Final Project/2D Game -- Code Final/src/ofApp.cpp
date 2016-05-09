@@ -4,16 +4,13 @@ bool sortVertically(basicSprite * a, basicSprite * b ) {
     return a->pos.y > b->pos.y;
 }
 
-// this method will be used to get the index of the sprite the player is standing on, or to check for possible collisions with "solid" tiles.
-//int ofApp::getTileName(int x, int y) {
-//    return backgrounds[y * GRIDW + x]->tileName;
-//}
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    ofBackground(200);
+    //ofBackground(200);
     
 //sprites setup
+    
     //set a limited frame rate, enable alpha blending, and set no anti-aliasing for pixel art.
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
@@ -49,8 +46,7 @@ void ofApp::setup(){
 //    }
     
 
-    cloud.x = ofGetWidth()/2;
-    cloud.y = 50;
+//player setup
     
     hasSuit = false;
     isHappy = false;
@@ -62,13 +58,10 @@ void ofApp::setup(){
     
 //text setup
     
-    textBox.load("Layer 6.png");
-
-    indent = 10;
-    
+    textBox.load("TextWindow.png");
     myFont.load("SUBWT.ttf", 90);
 
-    //sound setup
+//sound setup
     footstep.load("egg footstep.mp3");
     footstep.setSpeed(1.1);
 
@@ -77,7 +70,10 @@ void ofApp::setup(){
     win.setSpeed(1.1);
     played = false;
     
-     //create some clouds
+//create some clouds
+    cloud.x = ofGetWidth()/2;
+    cloud.y = 50;
+    
     for(int i = 1 ; i < 50 ; i++)
     {
         basicSprite * newSprite = new basicSprite();
@@ -233,9 +229,9 @@ void ofApp::draw(){
             textBox.draw(0, ofGetHeight() - 80 - myFont.stringHeight(security1) * 2, ofGetWidth(), myFont.stringHeight(security1) * 3.5);
             ofSetColor(255);
             myFont.drawString(security1, ofGetWidth()/2 - myFont.stringWidth(security1)/2, ofGetHeight() - 80);
-            
         
         }else if(hasSuit){
+            
             ofSetColor(255, 255, 0, 180);
             textBox.draw(0, ofGetHeight() - 80 - myFont.stringHeight(security2) * 2, ofGetWidth(), myFont.stringHeight(security2) * 3.5);
             ofSetColor(255, 255, 0);
@@ -248,8 +244,6 @@ void ofApp::draw(){
         ofSetColor(255, 0, 0, 255);
         myFont.load("SUBWT.ttf", 90);
         myFont.drawString(gameWin, ofGetWidth()/2 - myFont.stringWidth(gameWin)/2, ofGetHeight()/3);
-
-        isTalking = false;
         
         if(win.isPlaying() == false && played == false){
            win.play();
