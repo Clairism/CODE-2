@@ -63,17 +63,19 @@ void ofApp::setup(){
 //text setup
     
     textBox.load("TextWindow.png");
-    
-//    myText.init("Helvetica.dfont", 30);
-//    myText.wrapTextX(2*ofGetWidth()/3);
 
     indent = 10;
     
     myFont.load("SUBWT.ttf", 90);
-//sound setup
+
+    //sound setup
     footstep.load("egg footstep.mp3");
     footstep.setSpeed(1.1);
-    timer = 0;
+
+    gotSuit.load("gotSuit.wav");
+    win.load("win.wav");
+    win.setSpeed(1.1);
+    played = false;
     
      //create some clouds
     for(int i = 1 ; i < 50 ; i++)
@@ -89,7 +91,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+
 //    if(hasSuit){
 //        spriteRenderer->loadTexture("CharacterSuitSheet.png", 256, GL_NEAREST);
 //    }else{
@@ -205,25 +207,6 @@ void ofApp::update(){
 //        player->animation.frame_duration = 500;
 //    }
     
-  
-    //if there are backgrounds, loop through it and add each one to the renderer.
-//    if (backgrounds.size() > 0) {
-//        for (int i = backgrounds.size()-1; i>=0; i--) {
-//
-//          spriteRenderer->addCenteredTile(backgrounds[i]->tileName, 0, backgrounds[i]->pos.x, backgrounds[i]->pos.y, 0, 1, 1, F_NONE, BGSCALE);
-//
-//        }
-//    }
-    
-    
-    //update the background position based on the grid and the camera position.
-//    for (int i = 0; i < GRIDH; i++) {
-//        for (int j = 0; j < GRIDW; j++) {
-//
-//             backgrounds[i * GRIDW + j]->pos.set(j*spriteRenderer->getTileSize()*BGSCALE, i*spriteRenderer->getTileSize()*BGSCALE);
-//        }
-//    }
-    
     playerX = player -> pos.x;
     
     if(playerX >= securityX - 80){
@@ -232,52 +215,54 @@ void ofApp::update(){
         canTalk = false;
     }
     
-    if(isTalking){
-        
-        spriteRenderer->addCenteredTile(37, 0, ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200, 3, 1, 1, F_NONE, SCALE);
+   // if(isTalking){
+//        
+//        spriteRenderer->addCenteredTile(37, 0, ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200, 3, 1, 1, F_NONE, SCALE);
 
-    }
+   // }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight() - 200), 200, 300);
-//    gui.draw();
+//    textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight() - 200), 200, 300);
     spriteRenderer->draw();
     
 //    myText.setColor(255, 255, 255, 255);
 //    myText.drawCenter(ofGetWidth()/2, ofGetHeight() - 200);
 
     if(isTalking){
-        //ofSetColor(255, 255, 255, 20);
+//        ofSetColor(255, 255, 255, 20);
         //textBox.draw(ofPoint(ofGetWidth()/2 - myText.getWidth()/2, ofGetHeight() - 200), myText.getWidth(), myText.getHeight() * 5);
-        textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight() - 200), 200, 300);
+//        textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight()/2), 200, 300);
 
        // myText.setColor(255, 255, 0, 255);
-        myFont.load("SUBWT.ttf", 20);
-        myFont.drawString("Enjoy yourself!", ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200);
+        myFont.load("SUBWT.ttf", 30);
+//        myFont.drawString("Enjoy yourself!", ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200);
 
         if(!hasSuit){
-           // myText.setColor(0, 0, 0, 255);
-//            myText.drawCenter(ofGetWidth()/2, ofGetHeight() - 200);
-            //myFont.drawString("Security: You Can't enter without proper clothes!", ofGetWidth()/2, ofGetHeight()/2);
+            
+            ofSetColor(20, 50, 255);
+            myFont.drawString(security1, ofGetWidth()/2 - myFont.stringWidth(security1)/2, ofGetHeight() - 50);
 
-//            myText.setText("Security: You Can't enter without proper clothes!");
+        
         }else if(hasSuit){
-            //myText.setText("Enjoy yourself!");
-            //myFont.s
-            //myFont.drawString("Enjoy yourself!", ofGetWidth()/2, ofGetHeight()/2);
-
+            ofSetColor(20, 50, 255);
+            myFont.drawString(security2, ofGetWidth()/2 - myFont.stringWidth(security2)/2, ofGetHeight() - 50);
         }
     }
     
     
     if(playerX >= ofGetWidth()){
         ofSetColor(255, 0, 0, 255);
-        myFont.drawString("You Win!", ofGetWidth()/2 - myFont.stringWidth("You Win!")/2, ofGetHeight()/3);
-    }
+        myFont.load("SUBWT.ttf", 90);
+        myFont.drawString(gameWin, ofGetWidth()/2 - myFont.stringWidth(gameWin)/2, ofGetHeight()/3);
 
+        if(win.isPlaying() == false && played == false){
+           win.play();
+            played = true;
+        }
+    }
 
 }
 
@@ -288,10 +273,11 @@ void ofApp::keyPressed(int key){
         
         isChanging = true;
         //Changed = true;
-        
         if(!hasSuit){
             //wear suit
             hasSuit = true;
+            gotSuit.play();
+
         }else{
             //take off suit
             hasSuit = false;

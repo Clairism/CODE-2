@@ -150,13 +150,21 @@ class ofApp : public ofBaseApp{
     
     //dialog
     ofTrueTypeFont myFont;
-    ofxTextBlock        myText;
-    TextBlockAlignment  alignment;  //constants for controlling state
+//    ofxTextBlock        myText;
+//    TextBlockAlignment  alignment;  //constants for controlling state
+    string security1 = "You can't enter without proper clothes!";
+    string security2 = "Enjoy yourself!";
+    string gameWin = "You Win!";
     
     ofImage textBox;
     float indent;
     
     ofSoundPlayer footstep;
+    ofSoundPlayer gotSuit;
+    ofSoundPlayer win;
+    
+    bool played;
     float timer;
+    
 };
 
