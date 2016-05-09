@@ -62,7 +62,7 @@ void ofApp::setup(){
     
 //text setup
     
-    textBox.load("TextWindow.png");
+    textBox.load("Layer 6.png");
 
     indent = 10;
     
@@ -215,49 +215,42 @@ void ofApp::update(){
         isTalking = false;
     }
     
-   // if(isTalking){
-//        
-//        spriteRenderer->addCenteredTile(37, 0, ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200, 3, 1, 1, F_NONE, SCALE);
-
-   // }
-
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-//    textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight() - 200), 200, 300);
-    spriteRenderer->draw();
+//    textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight() - 200, -100), ofGetWidth(), 300);
     
-//    myText.setColor(255, 255, 255, 255);
-//    myText.drawCenter(ofGetWidth()/2, ofGetHeight() - 200);
+    spriteRenderer->draw();
 
     if(isTalking){
-//        ofSetColor(255, 255, 255, 20);
-        //textBox.draw(ofPoint(ofGetWidth()/2 - myText.getWidth()/2, ofGetHeight() - 200), myText.getWidth(), myText.getHeight() * 5);
-//        textBox.draw(ofPoint(ofGetWidth()/2, ofGetHeight()/2), 200, 300);
 
-       // myText.setColor(255, 255, 0, 255);
         myFont.load("SUBWT.ttf", 30);
-//        myFont.drawString("Enjoy yourself!", ofGetWidth()/2 - myFont.stringWidth("Enjoy yourself!")/2, ofGetHeight() - 200);
 
         if(!hasSuit){
             
-            ofSetColor(20, 50, 255);
-            myFont.drawString(security1, ofGetWidth()/2 - myFont.stringWidth(security1)/2, ofGetHeight() - 50);
-
+            ofSetColor(255, 255, 0, 180);
+            textBox.draw(0, ofGetHeight() - 80 - myFont.stringHeight(security1) * 2, ofGetWidth(), myFont.stringHeight(security1) * 3.5);
+            ofSetColor(255);
+            myFont.drawString(security1, ofGetWidth()/2 - myFont.stringWidth(security1)/2, ofGetHeight() - 80);
+            
         
         }else if(hasSuit){
-            ofSetColor(20, 50, 255);
-            myFont.drawString(security2, ofGetWidth()/2 - myFont.stringWidth(security2)/2, ofGetHeight() - 50);
+            ofSetColor(255, 255, 0, 180);
+            textBox.draw(0, ofGetHeight() - 80 - myFont.stringHeight(security2) * 2, ofGetWidth(), myFont.stringHeight(security2) * 3.5);
+            ofSetColor(255, 255, 0);
+            myFont.drawString(security2, ofGetWidth()/2 - myFont.stringWidth(security2)/2, ofGetHeight() - 80);
         }
     }
     
     
-    if(playerX >= ofGetWidth()){
+    if(playerX >= ofGetWidth()-10){
         ofSetColor(255, 0, 0, 255);
         myFont.load("SUBWT.ttf", 90);
         myFont.drawString(gameWin, ofGetWidth()/2 - myFont.stringWidth(gameWin)/2, ofGetHeight()/3);
 
+        isTalking = false;
+        
         if(win.isPlaying() == false && played == false){
            win.play();
             played = true;
