@@ -209,10 +209,10 @@ void ofApp::update(){
     
     playerX = player -> pos.x;
     
-    if(playerX >= securityX - 80){
-        canTalk = true;
+    if(playerX >= securityX - 120){
+        isTalking = true;
     }else{
-        canTalk = false;
+        isTalking = false;
     }
     
    // if(isTalking){
@@ -308,10 +308,10 @@ void ofApp::keyPressed(int key){
     }
     
     //talk
-    if (key == 'e' && canTalk){
+//    if (key == 'e' && canTalk){
 //        cout<< canTalk << endl;
-        isTalking = true;
-    }
+//        isTalking = true;
+//    }
 }
 
 //--------------------------------------------------------------
@@ -331,10 +331,10 @@ void ofApp::keyReleased(int key){
         walkingRight = false;
     }
     
-    if(key == OF_KEY_RETURN){
-
-        isTalking = false;
-    }
+//    if(key == OF_KEY_RETURN){
+//
+//        isTalking = false;
+//    }
 
 }
 

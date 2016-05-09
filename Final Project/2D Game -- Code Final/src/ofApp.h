@@ -150,6 +150,7 @@ class ofApp : public ofBaseApp{
     
     //dialog
     ofTrueTypeFont myFont;
+    
 //    ofxTextBlock        myText;
 //    TextBlockAlignment  alignment;  //constants for controlling state
     string security1 = "You can't enter without proper clothes!";
