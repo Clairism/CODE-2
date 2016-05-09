@@ -24,7 +24,7 @@ static animation_t normalIdle = {
     0, //.finalindex
     1   //.frameskip
 };
-
+/*
 static animation_t happyIdle = {
     2,  //.index of the first animation
     0,  //.frame
@@ -63,6 +63,32 @@ static animation_t walkLeft = {
     0, //.finalindex
     1   //.frameskip
 };
+*/
+static animation_t securityIdle = {
+    35,  //.index of the first animation
+    0,  //.frame
+    2,  //.totalframes
+    1,  //.width
+    1,  //.height
+    200, //.frameduration
+    0,  //.nexttick
+    -1, //.loops
+    35, //.finalindex
+    1   //.frameskip
+};
+
+static animation_t bgIdle = {
+    0,  //.index of the first animation
+    0,  //.frame
+    1,  //.totalframes
+    1,  //.width
+    1,  //.height
+    500, //.frameduration
+    0,  //.nexttick
+    -1, //.loops
+    0, //.finalindex
+    1   //.frameskip
+};
 
 
 class ofApp : public ofBaseApp{
@@ -84,46 +110,53 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    ofPoint playerPos;
-    bool changeAnim;
+    //bool changeAnim;
 
-    //create the instance of the spriteSheetRenderer. we only need one.
     ofxSpriteSheetRenderer* spriteRenderer;
-    ofxSpriteSheetRenderer* textWindow;
 
-    //create an instance of our basicSprite struct that we'll use to store player information
-    //(this is technically a pointer to a basicSprite object but we use it essentially the same as we would if it was the object itself)
+    //create an instance of basicSprite struct (store player information)
     basicSprite * player;
-    
-    //a vector is a C++ data structure like an array, except dynamic and powerful like a Java ArrayList.
-    //we'll use this vector to store basicSprite structs for all our background tiles.
-    vector<basicSprite *> backgrounds;
-    
-    //instead of just moving the player around on a static background, lets move a "camera" position along with the player.
-    //this will move all the background tiles relative to the camera, making the world appear to move around the player's perspective.
-    ofPoint cameraCenter;
+    basicSprite * security;
+
+//    vector<basicSprite *> backgrounds;
+    vector<basicSprite *> clouds;
     
     const float SCALE = 2; //constant to store our sprite scaling value
-    const float BGSCALE = 12; //constant to store our sprite scaling value
-    const int GRIDW = 30;  //width in tiles of the background grid
-    const int GRIDH = 30;  //height in tiles of the background grid
+    const float BGSCALE = 10; //constant to store our sprite scaling value
+//    const int GRIDW = 30;  //width in tiles of the background grid
+//    const int GRIDH = 30;  //height in tiles of the background grid
     
-
+    //returns tile index
+    int getTileName(int x, int y);
+    
+    ofPoint playerPos;
+    float securityX;
+    float playerX;
+    ofPoint cloud;
+    float sunScale;
+    
+    bool canChange;
+    bool isChanging;
+    bool Changed;
     bool hasSuit;
+    
     bool isHappy;
+    
+    bool canTalk;
+    bool isTalking;
     
     bool walkingLeft;
     bool walkingRight;
     
-    //lastly, we'll make a simple function that returns which sprite a tile is at a given x and y position
-    //this is useful so we can find out which sprites the player is near so we can collide or not, for example.
-    int getTileName(int x, int y);
-    
     //dialog
+    ofTrueTypeFont myFont;
     ofxTextBlock        myText;
     TextBlockAlignment  alignment;  //constants for controlling state
     
     ofImage textBox;
     float indent;
+    
+    ofSoundPlayer footstep;
+    float timer;
 };
 
