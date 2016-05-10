@@ -23,7 +23,7 @@ void ofApp::setup(){
     //set position
     playerPos.x = ofGetWidth()/2;
     playerPos.y = ofGetHeight()*2/3;
-    securityX = ofGetWidth() - 50;
+    securityX = ofGetWidth() - 60;
     
     //create "player" as an instance of our basicSprite struct, then set his position, speed, and default animation.
     player = new basicSprite();
